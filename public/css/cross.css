@@ -1,0 +1,17 @@
+.image-container {
+  position: relative;
+}
+
+.cross-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ff0000;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.cross-icon:hover {
+  color: #d00000;
+}

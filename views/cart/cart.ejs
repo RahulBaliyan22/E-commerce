@@ -1,0 +1,8 @@
+<%- include('../partials/header')%> <%- include('../partials/navbar')%>
+
+<ul>
+  <%for(let p of user.cart){%>
+    <li><%=p.name%>  <%=p.price%></li>
+  <%}%>
+</ul>
+<%- include('../partials/footer')%>

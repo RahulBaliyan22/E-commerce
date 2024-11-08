@@ -1,0 +1,40 @@
+<%- include('../partials/header')%>
+    <%- include('../partials/navbar')%>
+    <%- include('../partials/flash') %>
+
+    <div class="container">
+      <div class="row">
+        <% for(let item of products) { %>
+        <div class="col-md-4 col-sm-6 mb-4">
+          <div class="card h-100 d-flex flex-column">
+            <!-- Container for image and cross icon -->
+            <div class="image-container position-relative">
+              <img src="<%=item.img%>" class="card-img-top" alt="..." />
+              <!-- Cross icon positioned above the image -->
+               <%if(currentUser.role && currentUser.role==="seller"){%>
+               <form action="/product/<%=item._id%>?_method=Delete" method="POST">
+                <button type="submit" class="cross-icon" style="border: none; outline: none; background: none;">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+               </form>
+              <% }%>
+              
+            </div>
+            <div class="card-body flex-grow-1">
+              <h5 class="card-title"><%=item.name%></h5>
+              <p class="card-text"><em><%=item.discription%></em></p>
+              <p class="card-text">Price: <%=item.price%></p>
+            </div>
+            <div class="card-footer">
+              <a href="/product/<%=item._id%>" class="btn btn-info w-100">Details</a>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    
+
+    <%- include('../partials/footer')%>
+  </body>
+</html>

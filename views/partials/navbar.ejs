@@ -1,0 +1,47 @@
+<nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo03"
+      aria-controls="navbarTogglerDemo03"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Your Shopping</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/products"
+            >Home</a
+          >
+        </li>
+        <%if(currentUser && currentUser.role === "seller"){%>
+          <li class="nav-item">
+            <a class="nav-link" href="/product/new">New</a>
+          </li>
+       <% }%>
+        
+      </ul>
+      <div class="d-flex justify-content-between align-items-center" role="search">
+       <% if(!currentUser ){%>
+          <a class="nav-link m-3" href="/signup">Sign up</a>
+          <a class="nav-link m-3" href="/login">Log in</a>
+       <% } else {%>
+        <span>Hi,<%=currentUser.username%> </span>
+        <%if(currentUser.role === "seller"){%>
+          <i class="fa fa-usd ms-2" aria-hidden="true"></i><span>4</span>
+       <% }else {%>
+        <a class="nav-link" href="/user/cart"><i class="fa fa-shopping-cart m-3" aria-hidden="true"> <sup><span class="badge text-bg-info"><%=currentUser.cart.length%></span></sup></i>
+        </a>
+      <% }%>
+        <a  class="nav-link m-3" href="/logout" >Logout</a>
+       <%}%>
+    </div>
+    
+    </div>
+  </div>
+</nav>
