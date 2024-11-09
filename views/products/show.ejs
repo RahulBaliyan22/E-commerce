@@ -12,17 +12,32 @@
         <img src="<%= item.img %>" class="card-img-top" alt="<%= item.name %>" />
         <div class="card-body flex-grow-1">
           <h5 class="card-title font-weight-bold"><%= item.name %></h5>
-          <p class="card-text"><%= item.discription %></p>
+          <p class="card-text"><em><%= item.discription %></em></p>
           <p class="card-text text-success font-weight-bold">Price: <%= item.price %></p>
+          <p class="card-text">Available Quantity: <%=item.quantity%></p> 
+          <label for=""></label>
         </div>
         <div class="card-footer d-flex justify-content-between">
           <%if(currentUser && currentUser.role==="seller"){%>
             <a href="/product/<%= item._id %>/edit" class="btn btn-secondary">Edit</a>
           <%}%>
-          <form action="/user/<%= item._id %>/add" method="POST">
-            <button type="submit" class="btn btn-info">Add to Cart</button>
+          <form id="addToCartForm" action="/user/<%= item._id %>/add" method="POST">
+            <button type="button" class="btn btn-info" onclick="openModal()">Add to Cart</button>
+            <!-- Hidden input for quantity -->
+            <input type="hidden" name="added" id="hiddenQuantityInput"  value="1">
           </form>
-        
+          
+          <!-- Modal Structure -->
+          <div id="quantityModal" class="modal" style="display: none;">
+            <div class="modal-content">
+              <span class="close" onclick="closeModal()">&times;</span>
+              <h2>Enter Quantity</h2>
+              <input type="number" id="quantityInput"  min="1" value="1">
+              <button id="bq" type="button" onclick="addToCart1()">Add Quantity</button>
+            </div>
+          </div>
+          
+
           <a href="/product/<%= item._id %>" class="btn btn-success">Buy</a>
         </div>
       </div>
@@ -99,5 +114,43 @@
     </div>
   </div>
 </div>
+<script>
+// Open the modal
+function openModal() {
+  document.getElementById("quantityModal").style.display = "block";
+}
 
+// Close the modal
+function closeModal() {
+  document.getElementById("quantityModal").style.display = "none";
+}
+
+// Add to cart after setting the quantity
+function addToCart1() {
+  console.log('Inside addToCart1()');
+  
+  const quantity = document.getElementById("quantityInput").value;
+  console.log("Add to Cart clicked, quantity:", quantity);
+  
+  if (quantity && quantity > 0) {
+    // Set the hidden quantity input's value
+    document.getElementById("hiddenQuantityInput").value = quantity;
+
+    // Submit the form after setting the quantity
+    document.getElementById("addToCartForm").submit();
+    console.log("Quantity set in hidden input:", quantity); 
+  } else {
+    alert("Please enter a valid quantity.");
+  }
+}
+
+// Close the modal when clicking outside of it
+window.onclick = function(event) {
+  const modal = document.getElementById("quantityModal");
+  if (event.target === modal) {
+    closeModal();
+  }
+};
+
+</script>
 <%- include('../partials/footer') %>

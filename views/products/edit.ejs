@@ -56,6 +56,24 @@
       </div>
     </div>
     <div class="mb-3">
+      <label for="1" class="form-label">Available Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="1"
+        name="quantity"
+        min="0"
+        value="<%=item.quantity%>"
+        required
+      />
+      <div class="valid-feedback">
+        Looks good!
+      </div>
+      <div class="invalid-feedback">
+        Please set a valid price of product.
+      </div>
+    </div>
+    <div class="mb-3">
       <label for="dis" class="form-label">Discribe</label>
       <textarea
         name="discription"
@@ -66,6 +84,7 @@
 <%=item.discription%></textarea
       >
     </div>
+
 
     <button type="submit" class="btn btn-info">Keep Changes</button>
   </form>

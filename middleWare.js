@@ -1,10 +1,10 @@
 const {productSchema,reviewSchema} = require('./ssv')
 const Product = require('./models/Product');
 const validateProduct = (req,res,next)=>{
-  let { name, img, price, discription } = req.body;
-  const {error,value} = productSchema.validate({ name, img, price, discription })
+  let { name, img, price,quantity, discription } = req.body;
+  const {error,value} = productSchema.validate({ name, img, price, quantity ,discription })
   if(error){
-    console.log("i am in validateProduct  middleware")
+    console.log("in validateProduct ")
     return res.render('error',{err:error.message});
   }
   next();
@@ -16,7 +16,7 @@ const validateReview = (req,res,next)=>{
   let { rating,comment} = req.body;
   const {error,value} = reviewSchema.validate({ rating,comment})
   if(error){
-    console.log("i am in validateReview  middleware")
+    
     return res.render('error',{err:error.message});
   }
   next();
@@ -62,4 +62,14 @@ const isOwner = async(req,res,next)=>{
    }
   next();
 }
-module.exports = {validateProduct,validateReview,isLoggedIn,isSeller,isBuyer,isOwner};
+const isProductAvailable = async(req,res,next)=>{
+  let{id} = req.params //product id
+  let {added} = req.body;
+  let product = await Product.findById(id)
+  if(!product.quantity || product.quantity<added){
+    req.flash('error','Product not available');
+    return res.redirect(id ? `/product/${id}` : '/products');
+  }
+  next();
+}
+module.exports = {validateProduct,validateReview,isLoggedIn,isSeller,isBuyer,isOwner,isProductAvailable};

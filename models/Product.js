@@ -20,13 +20,15 @@ const productSchema = new mongoose.Schema({
     type:String,
     trim:true
   },
+  quantity:{
+    type : Number,
+    required:true
+  },
   reviews:[
-
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Review'
     }
-    
   ],
   owner:{
      type: mongoose.Schema.Types.ObjectId,

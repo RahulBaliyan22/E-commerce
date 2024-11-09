@@ -21,7 +21,7 @@
         </li>
         <%if(currentUser && currentUser.role === "seller"){%>
           <li class="nav-item">
-            <a class="nav-link" href="/product/new">New</a>
+            <a class="nav-link" href="/product/new" title="add product">New</a>
           </li>
        <% }%>
         
@@ -33,12 +33,12 @@
        <% } else {%>
         <span>Hi,<%=currentUser.username%> </span>
         <%if(currentUser.role === "seller"){%>
-          <i class="fa fa-usd ms-2" aria-hidden="true"></i><span>4</span>
+          <span class="ms-2" title="Earned">&#36;[amount]</span>
        <% }else {%>
         <a class="nav-link" href="/user/cart"><i class="fa fa-shopping-cart m-3" aria-hidden="true"> <sup><span class="badge text-bg-info"><%=currentUser.cart.length%></span></sup></i>
         </a>
       <% }%>
-        <a  class="nav-link m-3" href="/logout" >Logout</a>
+        <a  class="nav-link m-3" title="logout" href="/logout" >Logout</a>
        <%}%>
     </div>
     

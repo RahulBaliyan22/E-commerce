@@ -3,9 +3,6 @@ const router = express.Router();
 const User = require('../models/User');
 const passport = require('passport')
 
-
-
-
 router.get('/signup' , (req,res)=>{
   res.render('auth/signUp',{success:res.locals.success,error:res.locals.error})
 })
