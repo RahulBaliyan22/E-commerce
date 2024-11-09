@@ -11,6 +11,8 @@ const cartRoutes = require('./routes/cart')
 
 const session = require('express-session');
 const flash = require('connect-flash');
+
+
 const authRoutes = require('./routes/auth');
 const passport = require('passport');
 const LocalStrategy = require('passport-local')
@@ -33,9 +35,6 @@ app.use(session({
 app.use(flash());
 
 
-
-// day 2
-
 const ejsMate = require('ejs-mate')
 
 mongoose.connect('mongodb://127.0.0.1:27017/Shopping').then(()=>{console.log(`Connected to DataBase`)}).catch((err)=>{console.log(`DataBase Error: ${err}`)})
@@ -53,7 +52,7 @@ app.use(methodOverride('_method'))
 app.use(passport.initialize());
 app.use(passport.session());
 
-//passport use
+//passport configuration
 passport.use(new LocalStrategy(User.authenticate()));
 
 // use static serialize and deserialize of model for passport session support

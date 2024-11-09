@@ -15,30 +15,28 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/products"
-            >Home</a
-          >
+          <a class="nav-link active" aria-current="page" href="/products"><i class="fa fa-home me-1" aria-hidden="true"></i>Home</a>
         </li>
         <%if(currentUser && currentUser.role === "seller"){%>
           <li class="nav-item">
-            <a class="nav-link" href="/product/new" title="add product">New</a>
+            <a class="nav-link" href="/product/new" title="add product"><i class="fa fa-plus  me-1" aria-hidden="true"></i>New</a>
           </li>
        <% }%>
         
       </ul>
       <div class="d-flex justify-content-between align-items-center" role="search">
        <% if(!currentUser ){%>
-          <a class="nav-link m-3" href="/signup">Sign up</a>
-          <a class="nav-link m-3" href="/login">Log in</a>
+          <a class="nav-link m-3" href="/signup"><i class="fa fa-user-plus me-1" aria-hidden="true"></i>Sign up</a>
+          <a class="nav-link m-3" href="/login"><i class="fa fa-sign-in me-1" aria-hidden="true"></i>Log in</a>
        <% } else {%>
-        <span>Hi,<%=currentUser.username%> </span>
+        <a class="nav-link m-3" href="/user/cart" title="User"><span><i class="fa fa-user me-1" aria-hidden="true"></i>Hi,<%=currentUser.username%> </span></a>
         <%if(currentUser.role === "seller"){%>
-          <span class="ms-2" title="Earned">&#36;[amount]</span>
+          <span class="m-3" title="Earned"><i class="fa fa-credit-card-alt me-1" aria-hidden="true"></i> &#x20B9;[amount]</span>
        <% }else {%>
-        <a class="nav-link" href="/user/cart"><i class="fa fa-shopping-cart m-3" aria-hidden="true"> <sup><span class="badge text-bg-info"><%=currentUser.cart.length%></span></sup></i>
+        <a class="nav-link m-3" href="/user/cart" title="Your cart"><i class="fa fa-shopping-cart" aria-hidden="true"> <sup><span class="badge text-bg-info"><%=currentUser.cart.length%></span></sup></i>
         </a>
       <% }%>
-        <a  class="nav-link m-3" title="logout" href="/logout" >Logout</a>
+        <a  class="nav-link m-3" title="logout" href="/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
        <%}%>
     </div>
     

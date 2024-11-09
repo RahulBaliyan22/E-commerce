@@ -19,13 +19,14 @@
         </div>
         <div class="card-footer d-flex justify-content-between">
           <%if(currentUser && currentUser.role==="seller"){%>
-            <a href="/product/<%= item._id %>/edit" class="btn btn-secondary">Edit</a>
-          <%}%>
-          <form id="addToCartForm" action="/user/<%= item._id %>/add" method="POST">
-            <button type="button" class="btn btn-info" onclick="openModal()">Add to Cart</button>
+            <a href="/product/<%= item._id %>/edit" class="btn btn-secondary w-50 me-1" title="edit details"><i class="fa fa-pencil me-1" aria-hidden="true"></i>Edit</a>
+          <%} else{%>
+          <form id="addToCartForm" class="w-50 me-1" action="/user/<%= item._id %>/add" method="POST">
+            <button type="button" class="btn btn-info w-100 " onclick="openModal()"><i class="fa fa-cart-arrow-down me-1" aria-hidden="true"></i>Add to Cart</button>
             <!-- Hidden input for quantity -->
             <input type="hidden" name="added" id="hiddenQuantityInput"  value="1">
           </form>
+        <%}%>
           
           <!-- Modal Structure -->
           <div id="quantityModal" class="modal" style="display: none;">
@@ -37,8 +38,13 @@
             </div>
           </div>
           
-
-          <a href="/product/<%= item._id %>" class="btn btn-success">Buy</a>
+          <%if(currentUser && currentUser.role==="buyer"){%>
+          <a href="/product/<%= item._id %>" class="btn btn-success w-50" title="buy product"><i class="fa fa-shopping-bag me-1" aria-hidden="true"></i>Buy</a>
+          <%}else{%>
+          <form action="/product/<%= item._id %>?_method=DELETE" method="POST" class="w-50">
+            <button type="submit" class="btn btn-danger w-100"><i class="fa fa-trash me-1" aria-hidden="true"></i>Delete</button>
+          <%}%>
+          </form>
         </div>
       </div>
     </div>
@@ -50,6 +56,9 @@
     <div class="col-md-4">
       <div class="reviews-container" style="margin: auto; border-bottom: 2px solid black;">
         <h1 class="text-center mb-4">Reviews</h1>
+        <%if(item.reviews.length===0){%>
+          <p style="text-align: center; opacity: 0.4;">No review present for product</p>
+       <% }%>
         <ul class="list-unstyled" style="max-height: 400px; overflow-y: auto;">
           <% for (let r of item.reviews) { %>
             <li class="mb-3">
@@ -70,7 +79,7 @@
                   </h5>
                   <p class="card-text"><b>Feedback:</b> <%= r.comment %>.</p>
                   <form action="/product/<%= item._id %>/review/<%= r._id %>?_method=DELETE" method="POST">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash me-1" aria-hidden="true"></i>Delete</button>
                   </form>
                 </div>
               </div>
@@ -105,7 +114,7 @@
                 <label for="r" class="form-label">Comment</label>
                 <textarea name="comment" id="r" class="form-control" rows="3"></textarea>
               </div>
-              <button type="submit" class="btn btn-success">Add Review</button>
+              <button type="submit" class="btn btn-success"><i class="fa fa-pencil-square me-1" aria-hidden="true"></i>Add Review</button>
             </form>
           </div>
         </div>

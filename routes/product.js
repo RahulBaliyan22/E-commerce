@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 const {validateProduct,isLoggedIn,isSeller,isOwner,isProductAvailable} = require("../middleWare");
 
 //read
-router.get("/products", isLoggedIn , async (req, res) => {
+router.get("/products" , async (req, res) => {
   try{
   let products = await Product.find();
   res.render("products/index", { products , success: res.locals.success,error:res.locals.error});

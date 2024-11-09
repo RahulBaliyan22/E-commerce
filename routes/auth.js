@@ -38,6 +38,8 @@ if(password!=confirmpassword){
 router.get('/login' , (req,res)=>{
   res.render('auth/login',{success:res.locals.success,error:res.locals.error})
 })
+
+
 router.post('/login',passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true
