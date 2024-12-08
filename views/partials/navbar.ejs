@@ -7,16 +7,14 @@
     <% if (currentUser && currentUser.role==="buyer") { %>
     <a href="/user/cart"
       >Cart
-      <sup
+      <% if(currentUser.cart.length>0){%><sup
         ><span class="badge text-bg-info" style="font-size: smaller"
           ><%=currentUser.cart.length%></span
-        ></sup
-      ></a
-    >
+        ></sup><%}%></a>
+    
     <% } else { %>
     <a href="/product/new">Add New Product</a>
-
-    <span class="user-greeting">Earning: amout</span>
+    <span class="user-greeting">Earning: &#x20B9; <%=currentUser.amount%></span>
     <% } %> <% if (currentUser) { %>
     <span class="user-greeting">Hi, <%= currentUser.username %>!</span>
     <!-- Logout Button -->

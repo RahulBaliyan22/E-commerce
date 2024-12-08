@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express  = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -21,7 +22,7 @@ const paymentRoute = require('./routes/payment');
 const app = express();
 
 app.use(session({
-  secret: 'RAhul_HI_NAHI',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie:{
@@ -36,7 +37,7 @@ app.use(flash());
 
 const ejsMate = require('ejs-mate')
 
-mongoose.connect('mongodb://127.0.0.1:27017/Shopping').then(()=>{console.log(`Connected to DataBase`)}).catch((err)=>{console.log(`DataBase Error: ${err}`)})
+mongoose.connect(process.env.MONOGO_URL).then(()=>{console.log(`Connected to DataBase`)}).catch((err)=>{console.log(`DataBase Error: ${err}`)})
 
 //views folder
 app.set('views',path.join(__dirname,'views'));
@@ -78,7 +79,7 @@ app.use(paymentRoute);
 //public folder
 
 
-const PORT = 8080;
+const PORT =  process.env.PORT || 8080;
 app.listen(PORT,()=>{
   console.log(`connected to PORT : ${PORT}`)
 });

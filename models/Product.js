@@ -21,8 +21,7 @@ const productSchema = new mongoose.Schema({
     trim:true
   },
   avgRating:{
-    type:Number,
-    required:true
+    type:Number
   },
   quantity:{
     type : Number,

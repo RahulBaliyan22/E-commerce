@@ -11,20 +11,20 @@ req.body.email = req.user.email;
 req.body.firstname = req.user.firstname;
 //Here save all the details in pay object 
  const pay = req.body;
-const hashString = 'YOUR_MERCHANT_KEY' //store in in different file
+const hashString = process.env.PAY_SECRET
  + '|' + pay.txnid
  + '|' + pay.amount 
  + '|' + pay.productinfo 
  + '|' + pay.firstname 
  + '|' + pay.email 
  + '|' + '||||||||||'
- + 'YOUR_MERCHANT_SALT' //store in in different file
+ + process.env.PAY_SECRET 
 const sha = new jsSHA('SHA-512', "TEXT");
 sha.update(hashString);
 //Getting hashed value from sha module
  const hash = sha.getHash("HEX");
  
-pay.key = 'YOUR_MERCHANT_KEY' //store in in different file;
+pay.key = process.env.PAY_SECRET //store in in different file;
  pay.surl = 'http://localhost:8080/payment/success';
  pay.furl = 'http://localhost:8080/payment/fail';
  pay.hash = hash;

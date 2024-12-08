@@ -2,7 +2,6 @@ const User = require("../models/User")
 const Product  =require("../models/Product")
 const Gettocart = async(req,res)=>{
   let userId = req.user._id;
-  
   const user = await User.findById(userId).populate('cart.product');
   const productinfo = user.cart.map((p)=>p.product.name).join(',');
   res.render('cart/cart',{user,productinfo})
@@ -13,22 +12,20 @@ const Addtocart = async (req, res) => {
   let { added } = req.body;
   let userid = req.user._id;
 
-  // Find the product and user
-  let product = await Product.findById(id);
+  let product = await Product.findById(id).populate('owner');
   let user = await User.findById(userid);
+  let owner = await User.findById(product.owner);
 
-  // Check if the product is already in the user's cart
+  let amount = owner.amount +  added*product.price;
   const productInCart = user.cart.find(item => item.product._id.equals(id));
 
   if (productInCart) {
-    // If product exists, increment the quantity
     productInCart.added += parseInt(added);
+    await User.updateOne(owner,{$set:{amount}})
   } else {
-    // If product doesn't exist, add it as a new item
-    user.cart.push({ product, added });
+    user.cart.push({ product,added});
   }
 
-  // Save the updated user document
   await user.save();
 
   req.flash("success", "Product added to cart");

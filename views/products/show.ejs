@@ -137,8 +137,6 @@ function closeModal() {
 
 // Add to cart after setting the quantity
 function addToCart1() {
-  console.log('Inside addToCart1()');
-  
   const quantity = document.getElementById("quantityInput").value;
   console.log("Add to Cart clicked, quantity:", quantity);
   
@@ -147,8 +145,7 @@ function addToCart1() {
     document.getElementById("hiddenQuantityInput").value = quantity;
 
     // Submit the form after setting the quantity
-    document.getElementById("addToCartForm").submit();
-    console.log("Quantity set in hidden input:", quantity); 
+    document.getElementById("addToCartForm").submit(); 
   } else {
     alert("Please enter a valid quantity.");
   }
