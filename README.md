@@ -8,6 +8,6 @@ Node.js -> [BackHand] :  //add one line here
 
 for authentication i chose postman becase its a middleware that is highly excepted with node js
 I use Embedded JavaScript for my frontend
-I gained knowledge about mvc[models views controlles] archrcture
+I gained knowledge about mvc[models views controllers] archrcture
 
 here is a breif about my project.
