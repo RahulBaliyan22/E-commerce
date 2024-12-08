@@ -4,7 +4,6 @@ const validateProduct = (req,res,next)=>{
   let { name, img, price,quantity, discription } = req.body;
   const {error,value} = productSchema.validate({ name, img, price, quantity ,discription })
   if(error){
-    console.log("in validateProduct ")
     return res.render('error',{err:error.message});
   }
   next();
@@ -25,14 +24,19 @@ const validateReview = (req,res,next)=>{
 
 //check is user logged in
 const isLoggedIn = (req,res,next)=>{
-
   if(!req.isAuthenticated()){
    req.flash('error','Please Log in')
     return res.redirect('/login');
   }
   next();
 }
-
+const isLoggedOut = (req,res,next)=>{
+  if(req.isAuthenticated()){
+    req.flash('error','Please Logout first');
+    return res.redirect('/products')
+  }
+  next();
+}
 
 const isSeller = (req,res,next)=>{
   let {id} = req.params;
@@ -72,4 +76,4 @@ const isProductAvailable = async(req,res,next)=>{
   }
   next();
 }
-module.exports = {validateProduct,validateReview,isLoggedIn,isSeller,isBuyer,isOwner,isProductAvailable};
+module.exports = {validateProduct,validateReview,isLoggedIn,isLoggedOut,isSeller,isBuyer,isOwner,isProductAvailable};

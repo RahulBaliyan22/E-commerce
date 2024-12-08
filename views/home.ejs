@@ -1,0 +1,237 @@
+
+<%- include('./partials/header') %>
+
+<% if (!currentUser) { %>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+  
+      /* Header */
+      header {
+        background: linear-gradient(135deg, #6c63ff, #9b59b6);
+        color: white;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+  
+      header h1 {
+        margin: 0;
+      }
+  
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+      }
+  
+      .nav-links a:hover {
+        text-decoration: underline;
+      }
+  
+      /* Hero Section */
+      .hero {
+        position: relative;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+      }
+  
+      .background-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1794&auto=format&fit=crop') no-repeat center center/cover;
+        filter: blur(0);
+        z-index: -1;
+        transition: filter 0.3s ease;
+      }
+  
+      .hero:hover .background-overlay {
+        filter: blur(10px);
+      }
+  
+      .content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        padding: 50px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+        border-radius: 10px;
+      }
+  
+      .hero h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #FFD700;
+      }
+  
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: #ffeb3b;
+      }
+  
+      .btn {
+        padding: 12px 25px;
+        background-color: #ff5722;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+  
+      .btn:hover {
+        background-color: #ff784e;
+        transform: scale(1.1);
+      }
+  
+      /* Footer */
+      footer {
+        background: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+      }
+    </style>
+    <!-- Header -->
+    <header>
+      <h1>ShopNow</h1>
+      <nav class="nav-links">
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Login</a>
+        <a href="/about">About</a>
+        <a href="/contacts">Contact</a>
+      </nav>
+    </header>
+  
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="background-overlay"></div>
+      <div class="content">
+        <h2>Welcome to ShopNow</h2>
+        <p>Your one-stop destination for amazing deals and exclusive products.</p>
+        <button class="btn" onclick="window.location.href='/login'">Shop Now</button>
+      </div>
+    </section>
+  <% } else { %>
+    <%- include('./partials/navbar') %>
+    <%- include('./partials/flash') %>
+    
+    <div class="content">
+      <%if(currentUser.role==='buyer'){%>
+      <section class="hero">
+        <div class="background-overlay"></div>
+        <div class="cont">
+          <h2>Welcome back to ShopNow</h2>
+          <p>Discover new deals and enjoy exclusive offers!</p>
+          <button class="btn" onclick="window.location.href='/products'">Start Shopping</button>
+        </div>
+      </section>
+      <%}else{%>
+        <section class="hero">
+          <div class="background-overlay"></div>
+          <div class="cont">
+            <h2>Welcome back to ShopNow wareHouse</h2>
+            <p>Manage your Shop more efficiently with Shop Now!</p>
+            <button class="btn" onclick="window.location.href='/products'">Start Managing</button>
+          </div>
+        </section>
+      <%}%>
+      <style>
+        .hero {
+        position: relative;
+        height: 82vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+      }
+  
+      .background-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1794&auto=format&fit=crop') no-repeat center center/cover;
+        filter: blur(0);
+        z-index: -1;
+        transition: filter 0.3s ease;
+      }
+  
+      .hero:hover .background-overlay {
+        filter: blur(10px);
+      }
+  
+      .cont {
+        position: relative;
+        z-index: 1;
+        color: white;
+        padding: 50px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+        border-radius: 10px;
+      }
+  
+      .hero h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #FFD700;
+      }
+  
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        color: #ffeb3b;
+      }
+  
+      .btn {
+        padding: 12px 25px;
+        background-color: #ff5722;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+  
+      .btn:hover {
+        background-color: #ff784e;
+        transform: scale(1.1);
+      }
+      </style>
+    </div>
+  <% } %>
+<%- include('./partials/footer')%>
+
+  <script>
+    window.onload = function() {
+      const flashMessage = document.getElementById('flash-message');
+      if (flashMessage) {
+        setTimeout(() => {
+          flashMessage.style.transition = 'opacity 0.5s ease-out';
+          flashMessage.style.opacity = '0'; // Fade out
+          setTimeout(() => {
+            flashMessage.style.display = 'none'; // Hide the element after fade-out
+          }, 500); // Wait for the fade-out effect
+        }, 3000); // Wait for 5 seconds before starting the fade-out
+      }
+    };
+  </script>
+  

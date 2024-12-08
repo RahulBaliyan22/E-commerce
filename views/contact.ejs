@@ -1,0 +1,126 @@
+<%- include('./partials/header') %>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #6c63ff, #9b59b6);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 3rem;
+    }
+
+    .header p {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+    }
+
+    /* Contact Section */
+    .contact {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .contact p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    /* Form Styles */
+    .contact-form {
+      display: grid;
+      gap: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .contact-form button {
+      padding: 10px 20px;
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      background-color: #9b59b6;
+    }
+    .back{
+  background-color: #6c63ff;
+  border-radius: 20px;
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.back:hover{
+  cursor: pointer;
+  background-color: #9b59b6;
+}
+
+    /* Footer */
+    .footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+
+  <!-- Header -->
+  <header class="header" style="position: relative;">
+    
+    <button onclick="goBack()" class="back">Go Back</button>
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you! Reach out for any inquiries or support.</p>
+  </header>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <h2>Get In Touch</h2>
+    <p>If you have any questions or need support, please feel free to contact us. Our team is here to assist you.</p>
+
+    <!-- Contact Form -->
+    <form action="/submit-contact-form" method="POST" class="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+<script>
+  function goBack() {
+  window.history.back(); 
+}
+
+</script>
+<%- include('./partials/footer') %>

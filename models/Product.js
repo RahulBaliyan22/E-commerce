@@ -20,6 +20,10 @@ const productSchema = new mongoose.Schema({
     type:String,
     trim:true
   },
+  avgRating:{
+    type:Number,
+    required:true
+  },
   quantity:{
     type : Number,
     required:true

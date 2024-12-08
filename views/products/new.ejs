@@ -1,6 +1,6 @@
 <%- include('../partials/header')%> <%- include('../partials/navbar')%>
 
-
+<div class="content">
 <div class="container">
   <h1 class="mx-auto">ADD YOUR PRODUCT</h1>
   <form action="/products" method="POST" class="needs-validation" novalidate>
@@ -35,8 +35,8 @@
       </div>
     </div>
     <div class="mb-3">
-      <label for="q" class="form-label">Quantity What's to be Added</label>
-      <input type="number" class="form-control" id="q" name="quantity" min="0" required/>
+      <label for="q" class="form-label">Quantity </label>
+      <input type="number" class="form-control" id="q" name="quantity" min="0" placeholder="Enter Quantity" required/>
       <div class="valid-feedback">
         Looks good!
       </div>
@@ -57,6 +57,7 @@
 
     <button type="submit" class="btn btn-success">ADD PRODUCT</button>
   </form>
+</div>
 </div>
 <script>(() => {
   'use strict'

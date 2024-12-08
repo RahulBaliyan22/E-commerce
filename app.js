@@ -2,7 +2,6 @@ const express  = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const seedDb = require('./seed');
-const bodyParser = require('body-parser')
 const {router : productRouter} = require('./routes/product');
 const methodOverride = require('method-override')
 const reviewRoutes = require('./routes/review');
@@ -17,12 +16,12 @@ const authRoutes = require('./routes/auth');
 const passport = require('passport');
 const LocalStrategy = require('passport-local')
 const User = require('./models/User')
-
-
+const productApi = require("./routes/api/productapi")
+const paymentRoute = require('./routes/payment');
 const app = express();
 
 app.use(session({
-  secret: 'your_secret_key',
+  secret: 'RAhul_HI_NAHI',
   resave: false,
   saveUninitialized: true,
   cookie:{
@@ -45,7 +44,8 @@ app.set('view engine','ejs');
 app.engine('ejs',ejsMate); // default -> ejs-mate
 
 //body parsers
-app.use(bodyParser.urlencoded({ extended: true })) 
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 // Passport initialization
@@ -73,6 +73,8 @@ app.use(productRouter);//har incoming reques ke liye file check ho
 app.use(reviewRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
+app.use(productApi);
+app.use(paymentRoute);
 //public folder
 
 

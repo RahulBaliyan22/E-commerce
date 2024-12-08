@@ -56,4 +56,21 @@
   </div>
 </div>
 
-<%- include('../partials/footer')%>
+
+</body>
+<script>
+  window.onload = function() {
+    const flashMessage = document.getElementById('flash-message');
+    if (flashMessage) {
+      setTimeout(() => {
+        flashMessage.style.transition = 'opacity 0.5s ease-out';
+        flashMessage.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+          flashMessage.style.display = 'none'; // Hide the element after fade-out
+        }, 500); // Wait for the fade-out effect
+      }, 3000); // Wait for 5 seconds before starting the fade-out
+    }
+  };
+</script>
+
+</html>

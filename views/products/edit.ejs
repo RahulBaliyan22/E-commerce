@@ -1,5 +1,8 @@
-<%- include('../partials/header')%> <%- include('../partials/navbar')%>
+<%- include('../partials/header')%> 
+<%- include('../partials/navbar')%>
+<%- include('./partials/flash') %>
 
+<div class="content">
 <div class="container">
   <h1 class="mx-auto">ADD YOUR PRODUCT</h1>
   <form action="/product/<%=item._id%>?_method=Patch" method="POST" class="needs-validation" novalidate>
@@ -88,6 +91,7 @@
 
     <button type="submit" class="btn btn-info">Keep Changes</button>
   </form>
+</div>
 </div>
 <script>
 (() => {
