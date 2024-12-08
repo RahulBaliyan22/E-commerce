@@ -72,17 +72,20 @@ Create a `.env` file in the project root and add the following variables:
   
 ## Folder Structure
     
-    ├── controllers/        # Application logic\
-    
-    ├── models/             # Database schemas\
-    
-    ├── routes/             # API and application routes\
-    
-    ├── views/              # EJS templates\
-        ├── partials/       # Reusable EJS components\
-        ├── user/           # User-specific views\
-    ├── public/             # Static files (CSS, JS, images)\
-
+    ├── controllers/        # Application logic
+    ├── models/             # Database schemas
+    ├── routes/             # API and application routes
+        ├── api/
+    ├── views/              # EJS templates
+        ├── partials/       # Reusable EJS components
+        ├── products/       # Product-specific views
+        ├── auth/           # Authication-specific views
+        ├── cart/           # Views related to cart
+        ├── home.ejs        # Landing View
+    ├── public/             # Static files (CSS, JS, images)
+        ├── asserts/ 
+        ├── css/
+        ├── js/
     └── app.js              # Main application entry point
 
 
