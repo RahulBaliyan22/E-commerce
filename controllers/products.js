@@ -11,7 +11,7 @@ const Allproducts = async (req, res) => {
         product.reviews.forEach((item) => {
           totalRating += item.rating;
         });
-        product.avgRating = totalRating / product.reviews.length;
+        product.avgRating = Math.round((totalRating / product.reviews.length)*2)/2;
       } else {
         product.avgRating = 0; // Handle case with no reviews
       }

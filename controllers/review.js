@@ -6,6 +6,7 @@ const Addreivew =  async (req, res) => {
   try {
     let { id } = req.params;
     let { rating, comment } = req.body;
+    let userId = req.user._id;
 
     // Validate input
     if ((rating == 0 && comment == '') || rating == 0) {
@@ -14,7 +15,8 @@ const Addreivew =  async (req, res) => {
 
     // Find product and create new review
     let product = await Product.findById(id);
-    let review = new Review({ rating, comment });
+    let review = new Review({ rating, comment,userId});
+    
     product.reviews.push(review);
 
     // Save product and review
