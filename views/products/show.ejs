@@ -78,9 +78,11 @@
                     </p>
                   </h5>
                   <p class="card-text"><b>Feedback:</b> <%= r.comment %>.</p>
+                  <% if(currentUser && r.userId && JSON.stringify(currentUser._id)===JSON.stringify(r.userId)){%>
                   <form action="/product/<%= item._id %>/review/<%= r._id %>?_method=DELETE" method="POST">
                     <button type="submit" class="btn btn-danger"><i class="fa fa-trash me-1" aria-hidden="true"></i>Delete</button>
                   </form>
+                  <%}%>
                 </div>
               </div>
             </li>
