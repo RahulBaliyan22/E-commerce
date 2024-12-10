@@ -16,6 +16,7 @@ const products = [
     discription:"A lightweight serum enriched with hyaluronic acid for deep skin hydration and a radiant glow.",
     quantity:10
   },
+  
   {
     name: "Wireless Bluetooth Earbuds",
     img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8V2lyZWxlc3MlMjBCbHVldG9vdGglMjBFYXJidWRzfGVufDB8fDB8fHww",

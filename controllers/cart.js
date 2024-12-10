@@ -10,7 +10,7 @@ const Addtocart = async (req, res) => {
   let { id } = req.params; // product id
   let { added } = req.body;
   let userid = req.user._id;
-
+  try{
   let product = await Product.findById(id).populate('owner');
   let user = await User.findById(userid);
   let owner = await User.findById(product.owner);
@@ -28,6 +28,9 @@ const Addtocart = async (req, res) => {
 
   req.flash("success", "Product added to cart");
   res.redirect(`/product/${id}`);
+}catch(e){
+  res.render('error',{err:e});
+}
 }
 
 
