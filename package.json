@@ -24,6 +24,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
     "request": "^2.88.2",
+    "stripe": "^17.4.0",
     "toastr": "^2.1.4",
     "uuid": "^11.0.3"
   },

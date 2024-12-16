@@ -1,89 +1,95 @@
-<%- include('../partials/header')%>
-<%- include('../partials/navbar')%>
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
 <%- include('../partials/flash') %>
+
 <div class="content">
-<div class="container mt-5">
-  <div class="row">
-    <% for(let item of products) { %>
-      <% if(currentUser && currentUser.role && currentUser.role==="seller"){ %>
-        <% if(JSON.stringify(item.owner) === JSON.stringify(currentUser._id)){ %>
+  <div class="container mt-5">
+    <div class="row">
+      <% for (let item of products) { %>
+        <% if (currentUser && currentUser.role && currentUser.role === "seller") { %>
+          <% if (JSON.stringify(item.owner) === JSON.stringify(currentUser._id)) { %>
+            <div class="col-md-4 col-sm-6 mb-4">
+              <div class="card h-100 shadow-lg rounded-lg overflow-hidden">
+                <div class="image-container position-relative">
+                  <img src="<%= item.img %>" class="card-img-top" alt="<%= item.name %>" />
+                  <form action="/product/<%= item._id %>?_method=Delete" method="POST">
+                    <button type="submit" class="cross-icon position-absolute top-0 end-0 p-2" style="border: none; background: none;">
+                      <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                    </button>
+                  </form>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title text-dark font-weight-bold"><%= item.name %></h5>
+                  <p class="card-text"><em><%= item.discription %></em></p>
+                  <p class="card-text text-primary font-weight-bold">Price: &#x20B9; <%= item.price %></p>
+                  <% if (item.reviews.length) { %>
+                    <p class="card-text"><%= item.reviews.length %> reviews</p>
+                  <% } else { %>
+                    <p class="card-text text-muted">No Reviews</p>
+                  <% } %>
+                </div>
+                <div class="card-footer">
+                  <a href="/product/<%= item._id %>" class="btn btn-outline-primary w-100">View Details</a>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        <% } else { %>
           <div class="col-md-4 col-sm-6 mb-4">
-            <div class="card h-100 shadow-lg rounded-lg overflow-hidden">
+            <div class="card h-100 shadow-lg rounded-lg overflow-hidden" style="position: relative;">
               <div class="image-container position-relative">
-                <img src="<%=item.img%>" class="card-img-top" alt="<%=item.name%>" />
-                <form action="/product/<%=item._id%>?_method=Delete" method="POST">
-                  <button type="submit" class="cross-icon position-absolute top-0 end-0 p-2" style="border: none; background: none;">
-                    <i class="fa fa-times text-danger" aria-hidden="true"></i>
-                  </button>
-                </form>
+                <img src="<%= item.img %>" class="card-img-top" alt="<%= item.name %>" />
+                <span class="badge rounded-pill bg-warning text-dark position-absolute top-0 start-0 m-3"><%= item.avgRating %> ★</span>
               </div>
               <div class="card-body">
-                <h5 class="card-title text-dark font-weight-bold"><%=item.name%></h5>
-                <p class="card-text"><em><%=item.discription%></em></p>
-                <p class="card-text text-primary font-weight-bold">Price:&#x20B9; <%=item.price%></p>
-                <% if(item.reviews.length){ %>
-                  <p class="card-text"><%=item.reviews.length%> reviews</p>
+                <h5 class="card-title text-dark font-weight-bold"><%= item.name %></h5>
+                <p class="card-text"><em><%= item.discription %></em></p>
+                <p class="card-text text-primary font-weight-bold">Price: &#x20B9; <%= item.price %></p>
+                <span class="liked" product_id="<%= item._id %>" style="cursor: pointer;">
+                  <% if (currentUser && currentUser.wishList && currentUser.wishList.includes(item._id)) { %>
+                    <i class="fa-solid fa-heart text-danger"></i>
+                  <% } else { %>
+                    <i class="fa-regular fa-heart"></i>
+                  <% } %>
+                </span>
+                <% if (item.reviews.length) { %>
+                  <p class="card-text"><%= item.reviews.length %> reviews</p>
                 <% } else { %>
                   <p class="card-text text-muted">No Reviews</p>
                 <% } %>
               </div>
+
+              <% if (item.quantity <= 0) { %>
+                <div class="product-not-available-overlay">
+                  <p>Product Not Available</p>
+                </div>
+              <% } %>
+
               <div class="card-footer">
-                <a href="/product/<%=item._id%>" class="btn btn-outline-primary w-100">View Details</a>
+                <a href="/product/<%= item._id %>" class="btn btn-outline-primary w-100 <%= item.quantity <= 0 ? 'disabled-link' : '' %>">
+                  View Details
+                </a>
               </div>
             </div>
           </div>
         <% } %>
-      <% } else { %>
-        <div class="col-md-4 col-sm-6 mb-4">
-          <div class="card h-100 shadow-lg rounded-lg overflow-hidden">
-            <div class="image-container position-relative">
-              <img src="<%=item.img%>" class="card-img-top" alt="<%=item.name%>" />
-              <span class="badge rounded-pill bg-warning text-dark position-absolute top-0 start-0 m-3"><%=item.avgRating%> ★</span>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title text-dark font-weight-bold"><%=item.name%></h5>
-              <p class="card-text"><em><%=item.discription%></em></p>
-              <p class="card-text text-primary font-weight-bold">Price: <%=item.price%></p>
-              <span class="liked" product_id="<%=item._id%>" style="cursor: pointer;">
-                <% if(currentUser && currentUser.wishList && currentUser.wishList.includes(item._id)){ %>
-                  <i class="fa-solid fa-heart text-danger"></i>
-                <% } else { %>
-                  <i class="fa-regular fa-heart"></i>
-                <% } %>
-              </span>
-              <% if(item.reviews.length){ %>
-                <p class="card-text"><%=item.reviews.length%> reviews</p>
-              <% } else { %>
-                <p class="card-text text-muted">No Reviews</p>
-              <% } %>
-            </div>
-            <div class="card-footer">
-              <a href="/product/<%=item._id%>" class="btn btn-outline-primary w-100">View Details</a>
-            </div>
-          </div>
-        </div>
       <% } %>
-    <% } %>
+    </div>
   </div>
 </div>
-</div>
-<%- include('../partials/footer')%>
 
+<%- include('../partials/footer') %>
+
+<!-- CSS Styles -->
 <style>
-  /* General Styles */
-  body {
-    background-color: #f8f9fa;
-    font-family: 'Roboto', sans-serif;
-  }
-
   .card {
     border: none;
     transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
 
   .card-body {
@@ -106,6 +112,7 @@
     padding: 10px;
   }
 
+  /* Buttons */
   .btn {
     font-weight: bold;
     padding: 12px;
@@ -123,11 +130,13 @@
     color: #fff;
   }
 
+  /* Badge Styles */
   .badge {
     font-size: 0.9rem;
     font-weight: bold;
   }
 
+  /* Like Button Styles */
   .liked {
     font-size: 1.5rem;
     margin-top: 10px;
@@ -137,17 +146,39 @@
     color: red;
   }
 
-  /* Cross icon */
+  /* Cross Icon */
   .cross-icon i {
     font-size: 1.5rem;
     color: #fff;
   }
 
-  /* Image styles */
+  /* Image Styles */
   .image-container img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     border-bottom: 2px solid #ddd;
+  }
+
+  /* Disabled Product Overlay */
+  .product-not-available-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    z-index: 10;
+    text-align: center;
+  }
+
+  /* Disabled Link Style */
+  .disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
   }
 </style>

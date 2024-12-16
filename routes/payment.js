@@ -1,62 +1,25 @@
+
+const {isLoggedIn, isBuyer}= require('../middleWare.js');
+const stripe = require('stripe')(process.env.SECRET_KEY); // Replace with your secret key
 const express = require('express');
 const router = express.Router();
-const request = require('request');
-const jsSHA = require('jssha');
-const {v4:uuid} = require('uuid');
-const {isLoggedIn, isBuyer}= require('../middleWare.js');
 
-router.post('/payment_gateway/payumoney',isLoggedIn,isBuyer ,(req, res) => {
-req.body.txnid = uuid();
-req.body.email = req.user.email;
-req.body.firstname = req.user.firstname;
-//Here save all the details in pay object 
- const pay = req.body;
-const hashString = process.env.PAY_SECRET
- + '|' + pay.txnid
- + '|' + pay.amount 
- + '|' + pay.productinfo 
- + '|' + pay.firstname 
- + '|' + pay.email 
- + '|' + '||||||||||'
- + process.env.PAY_SECRET 
-const sha = new jsSHA('SHA-512', "TEXT");
-sha.update(hashString);
-//Getting hashed value from sha module
- const hash = sha.getHash("HEX");
- 
-pay.key = process.env.PAY_SECRET //store in in different file;
- pay.surl = 'http://localhost:8080/payment/success';
- pay.furl = 'http://localhost:8080/payment/fail';
- pay.hash = hash;
-//Making an HTTP/HTTPS call with request
-request.post({
- headers: {
- 'Accept': 'application/json',
- 'Content-Type': 'application/json'
- },
- url: 'https://sandboxsecure.payu.in/_payment', //Testing url
- form: pay
- }, function (error, httpRes, body) {
-if (error) 
- res.send(
- {status: false, 
- message:error.toString()
- }
- );
-if (httpRes.statusCode === 200) {
- res.send(body);
- } else if (httpRes.statusCode >= 300 && 
- httpRes.statusCode <= 400) {
- res.redirect(httpRes.headers.location.toString());
- }
- })
+router.post('/payment_gateway', isLoggedIn, isBuyer,async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'inr',
+      payment_method_types: ['card'],
+    });
+
+    res.status(200).json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error('Payment Intent Error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
 });
 
-router.post('/payment/success', (req, res) => {
-   res.send(req.body);
-  })
+module.exports = router;
 
-  router.post('/payment/fail', (req, res) => {
-     res.send(req.body);
-    })
-module.exports = router

@@ -7,12 +7,8 @@ const {router : productRouter} = require('./routes/product');
 const methodOverride = require('method-override')
 const reviewRoutes = require('./routes/review');
 const cartRoutes = require('./routes/cart')
-
-
 const session = require('express-session');
 const flash = require('connect-flash');
-
-
 const authRoutes = require('./routes/auth');
 const passport = require('passport');
 const LocalStrategy = require('passport-local')
@@ -20,6 +16,7 @@ const User = require('./models/User')
 const productApi = require("./routes/api/productapi")
 const paymentRoute = require('./routes/payment');
 const app = express();
+
 
 app.use(session({
   secret: process.env.SECRET,
@@ -33,7 +30,6 @@ app.use(session({
 }));
 
 app.use(flash());
-
 
 const ejsMate = require('ejs-mate')
 
@@ -59,6 +55,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 // use static serialize and deserialize of model for passport session support
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 
 
 app.use((req, res, next) => {
