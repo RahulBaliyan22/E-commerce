@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-  "start": "node ./app.js"
-},
+    "start": "node ./app.js"
+  },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "aws-amplify": "^6.10.3",
     "axios": "^1.7.9",
     "connect-flash": "^0.1.1",
     "dotenv": "^16.4.7",
@@ -30,6 +31,14 @@
     "uuid": "^11.0.3"
   },
   "devDependencies": {
-    "ejs": "^3.1.10"
+    "@aws-amplify/backend": "^1.9.0",
+    "@aws-amplify/backend-cli": "^1.4.3",
+    "aws-cdk": "^2.173.1",
+    "aws-cdk-lib": "^2.173.1",
+    "constructs": "^10.4.2",
+    "ejs": "^3.1.10",
+    "esbuild": "^0.24.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }
