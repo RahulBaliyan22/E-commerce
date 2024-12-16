@@ -3,7 +3,7 @@ const Product = require("./models/Product");
 const { ObjectId } = require('mongoose').Types;
 
 // Creating a sample ObjectId that will be used for all products
-const someObjectId = new ObjectId('675642f6ae5f14c794fef85d');
+const someObjectId = new ObjectId('67603bace0e111c8a88c3188');
 
 const products = [
   {
