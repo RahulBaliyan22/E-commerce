@@ -68,7 +68,6 @@ const adjustQuantity = async (req, res) => {
     
     // Find the user and populate their cart
     const customer = await User.findById(req.user._id).populate('cart.product');
-    console.log(customer)
     if (!customer) {
       return res.status(404).json({ error: "User not found." });
     }
@@ -97,14 +96,14 @@ const adjustQuantity = async (req, res) => {
         updatePromises.push(updatePromise);
         
       } else {
-        console.log(`Not enough stock for product: ${item.product.name}`);
+        return res.status(400).json({
+        message: `Not enough stock for product: ${item.product.name}`
+      });
       }
     }
     customer.cart = [];
     await customer.save();
     await Promise.all(updatePromises);
-
-    console.log("Quantities adjusted successfully.");
     return res.status(200).json({ message: "Quantities adjusted successfully." });
   } catch (error) {
     console.error("Error adjusting quantities:", error);

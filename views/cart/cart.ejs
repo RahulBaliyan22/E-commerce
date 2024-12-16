@@ -1,49 +1,115 @@
-<%- include('../partials/header')%>
-<%- include('../partials/navbar')%>
-<%- include('../partials/flash') %>
+<%- include('../partials/header')%> <%- include('../partials/navbar')%> <%-
+include('../partials/flash') %>
 <div class="content">
-<div class="cart-container container mt-5">
-  <h2 class="text-center mb-4"><i class="fa fa-shopping-basket me-1" aria-hidden="true"></i>Your Shopping Cart</h2>
-  
-  <% if (user.cart.length > 0) { %>
+  <div class="cart-container container mt-5">
+    <h2 class="text-center mb-4">
+      <i class="fa fa-shopping-basket me-1" aria-hidden="true"></i>Your Shopping
+      Cart
+    </h2>
+
+    <% if (user.cart.length > 0) { %>
     <ul class="list-unstyled">
-      <% let subtotal = 0; %>
-      <% user.cart.forEach((item) => { %>
-        <% if (item.product) { %>
-          <li class="cart-item d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm">
-            <div class="item-info d-flex align-items-center">
-              <img src="<%= item.product.img %>" alt="<%= item.product.name %>" class="cart-item-img me-3" />
-              <div>
-                <span class="item-name d-block font-weight-bold"><%= item.product.name %></span>
-                <span class="item-price text-primary">&#x20B9;<%= item.product.price %></span>
-                <span class="item-quantity d-block">Quantity: <%= item.added %></span>
-              </div>
-            </div>
-            <form action="/user/<%=item.product._id%>?_method=DELETE" method="POST" class="ms-3">
-              <button class="btn btn-danger btn-sm"><i class="fa fa-minus-square me-1" aria-hidden="true"></i>Remove</button>
-            </form>
-          </li>
-          <% subtotal += item.product.price * item.added; %>
-        <% } else { %>
-          <li class="cart-item text-danger">Product not found</li>
-        <% } %>
-      <% }); %>
-    </ul>
+      <% let subtotal = 0; %> <% user.cart.forEach((item) => { %> <% if
+      (item.product) { %>
+      <style>
+        .product-not-available-overlay {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: rgba(0, 0, 0, 0.75);
+          color: white;
+          padding: 20px;
+          font-size: 1.2rem;
+          font-weight: bold;
+          border-radius: 10px;
+          z-index: 10;
+          text-align: center;
+        }
+        .disabled{
+          opacity: 0.5;
+        }
+      </style>
+      <li
+        class="cart-item d-flex justify-content-between align-items-center mb-3 p-3 border rounded shadow-sm <%= item.product.quantity <= 0 ? 'disabled' : '' %>"
+        style="position: relative"
+      >
+      <div 
+      class="<%= item.product.quantity <= 0 ? 'product-not-available-overlay' : '' %>" 
+      style="display: <%= item.product.quantity <= 0 ? 'block' : 'none' %>"
+    >
+      Product Not Available
+    </div>
     
+        <div class="item-info d-flex align-items-center">
+          <img
+            src="<%= item.product.img %>"
+            alt="<%= item.product.name %>"
+            class="cart-item-img me-3"
+          />
+          <div>
+            <span class="item-name d-block font-weight-bold"
+              ><%= item.product.name %></span
+            >
+            <span class="item-price text-primary"
+              >&#x20B9;<%= item.product.price %></span
+            >
+            <span class="item-quantity d-block"
+              >Quantity: <%= item.added %></span
+            >
+          </div>
+        </div>
+        <style>
+          .disabled-link {
+            z-index: 11;
+          }
+        </style>
+        
+        <form
+          action="/user/<%=item.product._id%>?_method=DELETE"
+          method="POST"
+          class="ms-3"
+        >
+          <button
+            class="btn btn-danger btn-sm <%= item.product.quantity <= 0 ? 'disabled-link' : '' %>"
+          >
+            <i class="fa fa-minus-square me-1" aria-hidden="true"></i>Remove
+          </button>
+        </form>
+      </li>
+      <% subtotal = item.product.quantity > 0 ? subtotal + item.product.price *
+      item.added : subtotal; %> <% } else { %>
+      <li class="cart-item text-danger">Product not found</li>
+      <% } %> <% }); %>
+    </ul>
+
     <div class="cart-summary text-end mt-4">
-      <p class="h5">Subtotal: <span class="text-success">&#x20B9;<%= subtotal.toFixed(2) %></span></p>
-      
+      <p class="h5">
+        Subtotal:
+        <span class="text-success">&#x20B9;<%= subtotal.toFixed(2) %></span>
+      </p>
+
       <form id="payment-form">
         <div id="card-element"></div>
         <div id="card-errors" class="text-danger mt-2"></div>
-        <button id="pay-button" class="btn btn-primary w-100 py-2 mt-3 d-inline-block" type="button" publishKey="<%= key %>" subtotal="<%= subtotal %>" name="<%=user.username%>" user="<%= user %>">Proceed to Checkout</button>
+        <button
+          id="pay-button"
+          class="btn btn-primary w-100 py-2 mt-3 d-inline-block"
+          type="button"
+          publishKey="<%= key %>"
+          subtotal="<%= subtotal %>"
+          name="<%=user.username%>"
+          user="<%= user %>"
+        >
+          Proceed to Checkout
+        </button>
       </form>
     </div>
-    
-  <% } else { %>
+
+    <% } else { %>
     <p class="text-center">Your cart is empty. Start shopping now!</p>
-  <% } %>
-</div>
+    <% } %>
+  </div>
 </div>
 <script src="/js/payment.js"></script>
 <%- include('../partials/footer')%>
