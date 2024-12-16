@@ -78,7 +78,7 @@ app.use(paymentRoute);
 
 
 
-const PORT =  process.env.PORT || 8080;
+const PORT =  process.env.PORT || 80;
 app.listen(PORT,()=>{
   console.log(`connected to PORT : ${PORT}`)
 });
